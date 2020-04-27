@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .calculator {
+                display: grid;
+                /* width: 300px; */
+                grid-template-rows: 1fr 4fr 1fr;
+                /* background-color: blue; */
+                justify-items: stretch;
+                font-family: sans-serif;
+                border: 1px solid black;
+                align-items: stretch;
+            }
+            
+            .window {
+                /* background-color: grey; */
+                grid-row: 1 / 2;
+                font-size: 10vh;
+                justify-items:stretch;
+                justify-self: end;
+            }
+
+            .middle {
+                display: grid;
+                grid-row: 2 / 3;
+                /* background-color: burlywood; */
+                grid-template-columns: 3fr 1fr;
+            }
+
+            .bottom {
+                grid-row: 3 / 4;
+                /* background-color: red; */
+
+            }
+
+
+            .numbers {
+                grid-column: 1 / 2;
+                /* background-color: aqua; */
+                display: grid;
+                /* justify-items: stretch; */
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+
+            }
+
+
+            #zero {
+                grid-column: 2 / 3;
+                grid-row: 4/5;
+
+            }
+
+            .operators {
+                grid-column: 2 / 3;
+                display: grid;
+                justify-items: stretch;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                /* background-color: blue; */
+
+            }
+
+            button {
+                font-size: 10vh;
+                width: 100%;
+                border: 1px solid black;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="calculator">
+            <div class="window">This is the window</div>
+            <div class="middle">
+                <div class="numbers">
+                    <div><button>1</button></div>
+                    <div><button>2</button></div>
+                    <div><button>3</button></div>
+                    <div><button>4</button></div>
+                    <div><button>5</button></div>
+                    <div><button>6</button></div>
+                    <div><button>7</button></div>
+                    <div><button>8</button></div>
+                    <div><button>9</button></div>
+                    <div id="zero"><button>0</button></div>
+                </div>
+                <div class="operators">
+                    <div><button>+</button></div>
+                    <div><button>-</button></div>
+                    <div><button>*</button></div>
+                    <div><button>/</button></div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div><button>=</button></div>
+            </div>
+        </div>
+
+
+
+
+        <script>
+        
+            function add (a,b) {
+                console.log (typeof a);
+                console.log (typeof b);
+                return a+b;
+            }
+            function subtract (a,b) {
+                return a-b;
+            }
+            function multiply (a,b) {
+                return a*b;
+            }
+            function divide (a,b) {
+                return a/b;
+            }
+
+            function operate (operator,a,b) {
+                console.log(operator);
+
+                let answer=0;
+                switch (operator) {
+                    case "+":
+                        answer=add(a,b);
+                        break;
+                    case "-":
+                        answer=subtract(a,b);
+                        break;
+                    case "*":
+                        answer=multiply(a,b);
+                        break;
+                    case "/":
+                        answer=divide(a,b);
+                        break;
+                    default:
+                        console.log("ended up in switch with no result from answer (bad operator)")
+                        break;
+                }
+                console.log(`Me and ${answer}`);
+                return answer;
+            }
+
+        </script>
+
+    </body>
+</html>
+
+
+
+
