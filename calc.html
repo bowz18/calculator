@@ -14,11 +14,12 @@
             }
             
             .window {
-                /* background-color: grey; */
-                grid-row: 1 / 2;
+                display: flex;
+                /* width: 100%; */
                 font-size: 10vh;
-                justify-items:stretch;
-                justify-self: end;
+                justify-content: flex-end;
+                padding-right: 10px;
+                /* margin: 5px; */
             }
 
             .middle {
@@ -29,7 +30,10 @@
             }
 
             .bottom {
+                display: grid;
                 grid-row: 3 / 4;
+                grid-template-columns: 3fr 1fr;
+
                 /* background-color: red; */
 
             }
@@ -46,7 +50,7 @@
             }
 
 
-            #zero {
+            .zero {
                 grid-column: 2 / 3;
                 grid-row: 4/5;
 
@@ -73,29 +77,33 @@
     </head>
     <body>
         <div class="calculator">
-            <div class="window">This is the window</div>
+            <div class="top">
+                <div class="window" id="window">0</div>
+            </div>
             <div class="middle">
                 <div class="numbers">
-                    <div><button>1</button></div>
-                    <div><button>2</button></div>
-                    <div><button>3</button></div>
-                    <div><button>4</button></div>
-                    <div><button>5</button></div>
-                    <div><button>6</button></div>
-                    <div><button>7</button></div>
-                    <div><button>8</button></div>
-                    <div><button>9</button></div>
-                    <div id="zero"><button>0</button></div>
+                    <div><button id="number">1</button></div>
+                    <div><button id="number">2</button></div>
+                    <div><button id="number">3</button></div>
+                    <div><button id="number">4</button></div>
+                    <div><button id="number">5</button></div>
+                    <div><button id="number">6</button></div>
+                    <div><button id="number">7</button></div>
+                    <div><button id="number">8</button></div>
+                    <div><button id="number">9</button></div>
+                    <div class="zero" id="number"><button>0</button></div>
                 </div>
                 <div class="operators">
-                    <div><button>+</button></div>
-                    <div><button>-</button></div>
-                    <div><button>*</button></div>
-                    <div><button>/</button></div>
+                    <div><button id="operator">+</button></div>
+                    <div><button id="operator">-</button></div>
+                    <div><button id="operator">*</button></div>
+                    <div><button id="operator">/</button></div>
                 </div>
             </div>
             <div class="bottom">
-                <div><button>=</button></div>
+                <div><button id="equals">=</button></div>
+                <!-- <div><button></button></div> -->
+                <div><button id="clear">C</button></div>
             </div>
         </div>
 
@@ -103,7 +111,98 @@
 
 
         <script>
+            let a=0;
+            let b=0;
+            let operatorValue="";
+            let buttons = document.querySelectorAll("button");
+            buttons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    switch (e.target.id) {
+                        case "number":
+                        addToDisplay(e.target.innerText);
+                            break;
+                        case "operator":
+                        storeOperator (e.target.innerText);
+                            break;
+                        case "equals":
+                        doMath ();
+                            break;
+                        case "clear":
+                        clearAll();
+                            break;
+                        default:
+                        console.log ("stuck in a switch, with you");
+                            break;
+                    }
+                    
+                    
+                })
+            });
+            
+            function getDisplay() {
+                let calcWindow=document.querySelector(".window");
+                console.log(calcWindow);
+                if(String(calcWindow.textContent)=="0") {
+                    return "";
+                }
+                return calcWindow.textContent;
+            }
         
+            function setDisplay(setTo) {
+                let calcWindow=document.querySelector(".window");
+                calcWindow.textContent=setTo;
+            }
+
+            function addToDisplay(item) {
+                let setTo="";
+                setTo = getDisplay();
+                setTo += item;
+                setDisplay(setTo);
+            }
+
+            function storeOperator(operator) {
+                operatorValue=operator;
+                a= parseInt(getDisplay());
+                setDisplay("");
+
+            }
+
+            function clearAll() {
+                a=0
+                b=0
+                operatorValue=""
+                setDisplay("0")
+
+            }
+
+            function doMath(){
+                let final=0;
+
+                b=parseInt(getDisplay());
+                switch (operatorValue) {
+                    case "+":
+                        final=add(a,b);
+                        break;
+                    case "-":
+                        final=subtract(a,b);
+                        break;
+                    case "*":
+                        final=multiply(a,b);
+                        break;
+                    case "/":
+                        final=divide(a,b);
+                        break;
+                
+                    default:
+                        console.log("trapped in another goddam switch! this one is about doMath");
+                        break;
+                }
+                setDisplay(final);
+                a=final;
+
+            }
+
+
             function add (a,b) {
                 console.log (typeof a);
                 console.log (typeof b);
@@ -117,31 +216,6 @@
             }
             function divide (a,b) {
                 return a/b;
-            }
-
-            function operate (operator,a,b) {
-                console.log(operator);
-
-                let answer=0;
-                switch (operator) {
-                    case "+":
-                        answer=add(a,b);
-                        break;
-                    case "-":
-                        answer=subtract(a,b);
-                        break;
-                    case "*":
-                        answer=multiply(a,b);
-                        break;
-                    case "/":
-                        answer=divide(a,b);
-                        break;
-                    default:
-                        console.log("ended up in switch with no result from answer (bad operator)")
-                        break;
-                }
-                console.log(`Me and ${answer}`);
-                return answer;
             }
 
         </script>
